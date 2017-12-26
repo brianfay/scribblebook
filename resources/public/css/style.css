@@ -1,0 +1,15 @@
+/* some style */
+
+html {
+    margin: 0;
+    padding: 0;
+    background-color: #acd;
+}
+
+#app {
+    overflow: hidden;
+}
+
+canvas {
+    position: absolute;
+}
