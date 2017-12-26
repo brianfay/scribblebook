@@ -2,7 +2,9 @@
   (:require [reagent.core :as reagent]
             [scribblebook.window :as window]
             [scribblebook.turtle :as turtle]
-            [scribblebook.scribbles.scribble :as scribble]))
+            [scribblebook.scribbles.scribble :as scribble]
+            [scribblebook.scribbles.scribble-straight :as scribble-straight]
+            [scribblebook.koch-island :as koch-island]))
 
 (enable-console-print!)
 
@@ -19,7 +21,7 @@
   (let [ctx (.getContext cnv "2d")]
     (set-canvas-style cnv)
     (set-stroke-style ctx)
-    (scribble/draw ctx)))
+    (koch-island/draw ctx)))
 
 (defn turtle-canvas []
   (let [dom-node (reagent/atom nil)]

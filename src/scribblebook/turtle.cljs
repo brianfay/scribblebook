@@ -8,7 +8,7 @@
    {:ctx ctx
     :x x
     :y y
-    :angle angle
+    :angle (* -0.5 pi) ;;points upwards using canvas coordinates
     :step-size step-size})
   ([ctx]
    (turtle
@@ -30,6 +30,14 @@
     (.lineTo (:ctx turt) new-x new-y)
     (assoc turt :x new-x :y new-y)))
 
+(defn forward-without-drawing
+  [{:keys [ctx x y angle step-size] :as turt}]
+  (let [new-turt {:ctx ctx
+                  :x (+ x (* step-size (.cos js/Math angle)))
+                  :y (+ y (* step-size (.sin js/Math angle)))
+                  :step-size step-size}]
+    (drop-turtle new-turt)))
+
 (defn rotate-rand
   [turt]
   (update turt :angle #(+ %
@@ -44,14 +52,7 @@
   [turt]
   (update turt :angle #(+ % (* 0.5 pi))))
 
-(defn draw
-  [ctx]
-  (let [turt (turtle ctx)]
-    (drop-turtle turt)
-    (loop [i 1000
-           t turt]
-      (when (<= 0 i)
-        (recur (dec i)
-               ((rand-nth [forward rotate-right rotate-left
-                           rotate-rand]) t))))
-    (.stroke ctx)))
+(def turtle-command {"F" forward
+                     "f" forward-without-drawing
+                     "+" rotate-left
+                     "-" rotate-right})
